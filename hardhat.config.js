@@ -1,4 +1,9 @@
-require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-etherscan");
+require("@nomicfoundation/hardhat-chai-matchers");
+require("hardhat-gas-reporter");
+require("solidity-coverage");
+require("@openzeppelin/hardhat-upgrades");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {

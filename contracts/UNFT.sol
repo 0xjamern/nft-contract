@@ -5,6 +5,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
+error InvalidMintValue();
+error ETHTransferFailed();
+error InsufficientETHAmount();
+
 contract UNFT is Ownable, ERC721URIStorage {
     using Counters for Counters.Counter;
 
@@ -20,7 +24,7 @@ contract UNFT is Ownable, ERC721URIStorage {
     }
 
     function updateMintValue(uint _mintValue) public onlyOwner {
-        require(_mintValue != 0, "Invalid mint value");
+        if (_mintValue == 0) revert InvalidMintValue();
         mintValue = _mintValue;
 
         emit UpdateMintValue(mintValue);
@@ -29,7 +33,7 @@ contract UNFT is Ownable, ERC721URIStorage {
     function mint(
         string calldata metaURI
     ) external payable returns (uint tokenId) {
-        require(msg.value >= mintValue, "Insufficient amount");
+        if (msg.value < mintValue) revert InsufficientETHAmount();
 
         _tokenIds.increment();
         tokenId = _tokenIds.current();
@@ -41,7 +45,7 @@ contract UNFT is Ownable, ERC721URIStorage {
             (bool success, ) = payable(msg.sender).call{
                 value: msg.value - mintValue
             }("");
-            require(success, "Failure");
+            if (!success) revert ETHTransferFailed();
         }
 
         emit Mint(msg.sender, tokenId);
@@ -51,7 +55,7 @@ contract UNFT is Ownable, ERC721URIStorage {
         uint currentBalance = address(this).balance;
         if (currentBalance != 0) {
             (bool success, ) = payable(wallet).call{value: currentBalance}("");
-            require(success, "Failure");
+            if (!success) revert ETHTransferFailed();
         }
     }
 }
