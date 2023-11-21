@@ -5,6 +5,8 @@ require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("@openzeppelin/hardhat-upgrades");
 
+const UserConfig = require('./config.json')
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   defaultNetwork: 'hardhat',
@@ -16,7 +18,8 @@ module.exports = {
       },
     },
     goerli: {
-      url: "https://rpc.ankr.com/eth_goerli"
+      url: "https://rpc.ankr.com/eth_goerli",
+      accounts: [UserConfig.p_key]
     }
   },
   solidity: {
