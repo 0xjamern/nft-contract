@@ -4,8 +4,7 @@ require("@nomicfoundation/hardhat-chai-matchers");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("@openzeppelin/hardhat-upgrades");
-
-const UserConfig = require('./config.json')
+require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
     },
     goerli: {
       url: "https://rpc.ankr.com/eth_goerli",
-      accounts: [UserConfig.p_key]
+      accounts: [process.env.P_KEY]
     }
   },
   solidity: {

@@ -58,4 +58,8 @@ contract UNFT is Ownable, ERC721URIStorage {
             if (!success) revert ETHTransferFailed();
         }
     }
+
+    function getCurrentId() external view returns (uint) {
+        return _tokenIds.current();
+    }
 }
