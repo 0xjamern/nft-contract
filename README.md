@@ -27,6 +27,8 @@ npx hardhat test
 ```
 
 * Please check this screenshot:
+  ![image](https://github.com/0xjamern/nft-contract/assets/43978164/2f30553c-01e9-4b2a-835f-bf6e83a2761c)
+
 
 ### Deploy
 
